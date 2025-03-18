@@ -29,12 +29,17 @@ def selct(number, score, bank, turn, algo, first, sec, order):
     
     dividers = [i for i in range(2, 6) if number % i == 0]
     
+    if turn % 2 == 1:
+        maxi = True
+    else:
+        maxi = False
+    
     if dividers:
         tk.Label(main_w, text=f"Score= {score}, Bank= {bank}").grid(row=1, column=3)
         
         if first.startswith("AI"):
             start_time = time.time()
-            tree = Tree({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}) if algo == 'MinMax' else Tree_A({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0})
+            tree = Tree({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi) if algo == 'MinMax' else Tree_A({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi)
             tree.expand()
             best_divider = tree.best_move()
             number //= best_divider
@@ -117,8 +122,7 @@ def game():
     
     root.deiconify()
     score, bank, turn = 0, 0, 1
-    #list_number = random.sample(range(30000, 50000), 5)
-    list_number = [42680]
+    list_number = random.sample(range(30000, 50000), 5)
     for i, num in enumerate(list_number):
         tk.Button(root, text=num, command=lambda num=num: algo_c(num, score, bank, turn)).grid(row=2, column=i+1)
 
