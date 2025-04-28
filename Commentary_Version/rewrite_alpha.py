@@ -68,16 +68,16 @@ class Tree_A:
         numbr = self.state['number'] // move
         new_state = {
             'number': numbr,
-            'score': self.state['score'],
-            'Bank': self.state['Bank'],
+            'score': self.state['score'], # Take the current value of the state given to the score 
+            'Bank': self.state['Bank'], # Take the current value of the state given to the Bank 
             'MinMax_ana': 0
         }
 
         if numbr % 10 == 5 or numbr % 10 == 0:
-            new_state['Bank'] += 1
+            new_state['Bank'] += 1 # Updtae of the Bank
         if numbr % 2 == 0:
             new_state['score'] = new_state['score'] - 1 
-        if numbr % 2 == 1:
+        if numbr % 2 == 1: # Update of the score
             new_state['score'] += 1
         
         return new_state

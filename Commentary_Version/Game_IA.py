@@ -17,7 +17,7 @@ def selct(number, score, bank, turn, algo, first, sec, order, visited, visit_tot
     global main_w
     if turn == 1:
         score, bank = 0, 0
-        fichier =  open("data.txt", "a")
+        fichier =  open("data.txt", "a") # Give the data.txt file to the fichier variables
         fichier.write(f"\nFirst_Number: {number}, ")
         fichier.close()
     else:
@@ -32,24 +32,24 @@ def selct(number, score, bank, turn, algo, first, sec, order, visited, visit_tot
     main_w.title(f"{first} Choose Divider from the possibles one")
     main_w.geometry("600x200+800+300")
     
-    dividers = [i for i in range(2, 6) if number % i == 0]
+    dividers = [i for i in range(2, 6) if number % i == 0] # Check the possible divider
     
     if turn % 2 == 1:
-        maxi = True
+        maxi = True # determine if it's the max level or not
     else:
         maxi = False
     
-    if dividers:
+    if dividers: # Display the dividers
         tk.Label(main_w, text=f"Score= {score}, Bank= {bank}").grid(row=1, column=3)
         
-        if first.startswith("AI"):
+        if first.startswith("AI"): # For the AI 
             start_time = time.time()
-            tree = Tree({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi) if algo == 'MinMax' else Tree_A({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi)
-            tree.expand()
-            visited = tree.count_node()
-            visit_total += visited
-            best_divider = tree.best_move()
-            number //= best_divider
+            tree = Tree({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi) if algo == 'MinMax' else Tree_A({'number': number, 'score': score, 'Bank': bank, 'MinMax_ana': 0}, None, None, maxi) # Give the current state to the MinMax or Alpha algorithm
+            tree.expand() # Call the expend function 
+            visited = tree.count_node() # Number of node visited for a turn
+            visit_total += visited # Total of Node visited
+            best_divider = tree.best_move() # Best moves for the AI 
+            number //= best_divider # New number
             end_time = time.time()
             tk.Label(main_w, text=f"{first} chose divisor: {best_divider}, New value: {number}, Execution Time: {end_time - start_time:.6f}, Node_visited: {visited}").grid(row=2, column=3)
             tk.Button(main_w, text="Next Turn", command=lambda: selct(number, score, bank, turn + 1, algo, sec, first, order,  0, visit_total )).grid(row=3, column=3)
@@ -129,7 +129,7 @@ def algo_c(number, score, bank, turn):
 def valid_number(n, min_turns=3): # Check if the number can garentee at least 3 turns
     turns = 0
     while turns < min_turns:
-        dividers = [i for i in [2, 3, 4, 5] if n % i == 0]
+        dividers = [i for i in [2, 3, 4, 5] if n % i == 0] 
         if not dividers:
             return False  
         n //= random.choice(dividers)  

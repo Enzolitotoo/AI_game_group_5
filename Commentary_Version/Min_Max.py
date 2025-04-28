@@ -26,7 +26,7 @@ class Tree:
         else:
             self.state['MinMax_ana'] = 1 #determine who wins if it's odd then a -1 (for the second player) value is given 
 
-    def expand(self, depth=0, max_depth=10):
+    def expand(self, depth=0, max_depth=20):
         if depth >= max_depth:
             return
         self.visited_nodes += 1
@@ -37,8 +37,8 @@ class Tree:
             return
 
         for i in possible_moves: # Main difference with the alpha beta pruning we give the value of the new state in the expand function
-            numbr = self.state['number'] // i # definition of the state
-            new_state = {
+            numbr = self.state['number'] // i 
+            new_state = { # definition of the state
                 'number': numbr,
                 'score': self.state['score'],
                 'Bank': self.state['Bank'],
